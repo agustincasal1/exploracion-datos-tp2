@@ -1,0 +1,5 @@
+DBI
+RSQLite
+readxl
+dplyr
+ggplot2

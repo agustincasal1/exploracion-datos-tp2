@@ -1,0 +1,11 @@
+*.R text eol=lf
+*.sql text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.txt text eol=lf
+*.ipynb text eol=lf
+*.xlsx binary
+*.sqlite binary
+*.png binary
+*.pdf binary
+

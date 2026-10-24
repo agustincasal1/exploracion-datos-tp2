@@ -1,0 +1,11 @@
+.ipynb_checkpoints/
+.Rhistory
+.RData
+Rplots.pdf
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.zip
+__pycache__/
+.DS_Store
+
