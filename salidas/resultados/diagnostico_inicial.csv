@@ -1,0 +1,9 @@
+"campo","tipo","faltantes","vacios","codigo_interrogacion","distintos_sin_na","porcentaje_na","porcentaje_vacios","porcentaje_interrogacion"
+"InvoiceNo","character",0,0,0,4852,0,0,0
+"StockCode","character",0,0,0,3067,0,0,0
+"Description","character",344,0,14,2986,0.35,0,0.01
+"Quantity","numeric",0,0,0,326,0,0,0
+"InvoiceDate","POSIXct/POSIXt",0,0,0,4468,0,0,0
+"UnitPrice","numeric",0,0,0,609,0,0,0
+"CustomerID","numeric",29505,0,0,1812,29.62,0,0
+"Country","character",0,0,0,31,0,0,0
