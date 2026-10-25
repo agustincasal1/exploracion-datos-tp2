@@ -1,0 +1,10 @@
+"regla","campo","condicion","motivo","accion","afectados","unidad","filas_antes","filas_despues"
+"seleccion_periodo","InvoiceDate","2011-01-01 <= fecha < 2011-04-01","Tres meses completos y un tamaño manejable","seleccionar",442307,"renglones",541909,99602
+"cliente_a_texto","CustomerID","cliente conocido","El ID es una etiqueta, no una magnitud","convertir",70097,"renglones",99602,99602
+"cliente_ausente","CustomerID","cliente NA","No perder ventas por falta de cliente","conservar como NULL",29505,"renglones",99602,99602
+"fecha_iso","InvoiceDate","fecha-hora importada","Guardar la hora de cada renglón","convertir a texto ISO",99602,"renglones",99602,99602
+"precio_a_peniques","UnitPrice","precio con hasta dos decimales","Sumar dinero con enteros sin perder precisión","multiplicar por 100 y convertir a entero",99602,"renglones",99602,99602
+"descripcion_etiqueta","Description","espacios en bordes, vacío o ?","No usar textos vacíos como nombre","normalizar etiqueta, conservar texto original",18571,"renglones",99602,99602
+"etiqueta_por_codigo","StockCode / Description","código de artículo observado","Un código puede tener varias descripciones","elegir primera etiqueta válida y guardar su fila de origen",3067,"articulos",99602,99602
+"precio_cero_fuera_del_analisis","UnitPrice / Quantity","precio igual a cero o cantidad igual a cero","Separar ajustes sin valorar de los resultados de ventas","conservar en SQLite con analizable=0",513,"renglones",99602,99602
+"repeticiones_conservadas","ocho campos originales","idéntico a una fila anterior","No hay ID de línea que demuestre un error","conservar y medir sensibilidad",784,"renglones",99602,99602
