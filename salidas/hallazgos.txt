@@ -1,0 +1,8 @@
+La selección tiene 99.602 renglones; 99.089 tienen precio positivo y entran en los resultados.
+El mayor neto mensual corresponde a 2011-03 y el menor a 2011-02. Comparo tres meses completos; esto no prueba una tendencia anual.
+United Kingdom concentra el 80,5% del neto total del trimestre. Describe esta tienda británica, no el mercado de cada país.
+El código 85099B encabeza las unidades netas con 10.996. Cantidad vendida no equivale a rentabilidad.
+Si se conservara sólo la primera fila de cada repetición exacta, el neto cambiaría en -3.841,04 GBP. Mantengo las filas porque no puedo demostrar que sean errores.
+Las cancelaciones pueden corresponder a operaciones de otros períodos. No calculo una tasa de devolución por compra.
+Los importes son cantidad por precio registrado. Faltan costos, impuestos y detalle contable para hablar de ganancias.
+Algunos códigos son cargos o ajustes. El ranking describe los códigos del archivo; no demuestra demanda futura.

@@ -89,9 +89,9 @@ write.csv(bitacora, file.path(raiz, "salidas", "bitacora_limpieza.csv"),
 
 comparacion <- data.frame(
   indicador = c("renglones de la selección", "clientes desconocidos", "renglones repetidos",
-                "precios cero", "renglones incluidos en resultados", "precios en unidad original GBP"),
+                "precios cero", "renglones incluidos en resultados", "descripciones con espacios en bordes (etiqueta)"),
   antes = c(n, sum(is.na(muestra$CustomerID)), sum(repetidas), sum(muestra$UnitPrice == 0),
-            n, n),
+            n, sum(muestra$Description != trimws(muestra$Description), na.rm = TRUE)),
   despues = c(nrow(lineas), sum(is.na(ventas$cliente_id)), sum(repetidas),
               sum(lineas$precio_peniques == 0), sum(lineas$analizable == 1), 0)
 )
