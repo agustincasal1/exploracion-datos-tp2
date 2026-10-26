@@ -2,8 +2,8 @@
 # No agrego errores a los datos analíticos para después decir que los limpié.
 pruebas <- data.frame(prueba = character(), resultado = character(), evidencia = character())
 registrar_prueba <- function(nombre, evidencia) {
-  pruebas[nrow(pruebas) + 1L, ] <<- c(nombre, "OK", evidencia)
   cat(nombre, ": OK. ", evidencia, "\n", sep = "")
+  data.frame(prueba = nombre, resultado = "OK", evidencia = evidencia)
 }
 
 # Caso calculado a mano: 74.215 * 104 = 7.718.360 peniques.
@@ -14,7 +14,7 @@ stopifnot(nrow(caso) == 2,
           all(caso$precio_peniques == 104),
           all(caso$importe_peniques == c(7718360, -7718360)),
           sum(caso$importe_peniques) == 0)
-registrar_prueba("Caso conocido", "Excel filas 61621 y 61626: importes +77183,60 y -77183,60 GBP")
+pruebas <- rbind(pruebas, registrar_prueba("Caso conocido", "Excel filas 61621 y 61626: importes +77183,60 y -77183,60 GBP"))
 
 # Pruebas de las transformaciones con datos separados, incluidos sus límites.
 texto_prueba <- c(" nombre ", "", "?", NA_character_)
@@ -29,7 +29,10 @@ stopifnot(!is.na(fecha_prueba[1]), is.na(fecha_prueba[2]))
 cliente_prueba <- c(12346, NA_real_)
 stopifnot(identical(ifelse(is.na(cliente_prueba), NA_character_,
                          sprintf("%.0f", cliente_prueba)), c("12346", NA_character_)))
-registrar_prueba("Casos límite separados", "Espacios, interrogación, NA, fecha imposible, precio con tres decimales y cero")
+precio_no_negativo <- tryCatch({stopifnot(all(c(1.04, -1) >= 0)); FALSE}, error = function(e) TRUE)
+stopifnot(precio_no_negativo)
+stopifnot(identical(as.integer(c(100, 0, 100) > 0 & c(2, 2, 0) != 0), c(1L, 0L, 0L)))
+pruebas <- rbind(pruebas, registrar_prueba("Casos límite separados", "Espacios, interrogación, NA, fecha imposible, precio negativo o con tres decimales, precio y cantidad cero"))
 
 verificar_integridad <- function(ruta) {
   conexion <- abrir_base(ruta)
@@ -48,7 +51,7 @@ verificar_integridad(ruta_base)
 stopifnot(resultados$control_joins$filas == resultados$totales$filas,
           resultados$control_joins$filas_distintas == nrow(lineas),
           resultados$control_joins$importe_peniques == resultados$totales$importe_peniques)
-registrar_prueba("Integridad y JOIN", "Claves únicas, foreign_key_check sin huérfanos, filas e importes sin multiplicación")
+pruebas <- rbind(pruebas, registrar_prueba("Integridad y JOIN", "Claves únicas, foreign_key_check sin huérfanos, filas e importes sin multiplicación"))
 
 # Comparación independiente de los tres resultados SQL contra R.
 analisis_r <- ventas[ventas$analizable == 1, ]
@@ -59,7 +62,7 @@ r_articulos <- aggregate(cantidad ~ codigo, analisis_r, sum)
 stopifnot(all(r_mensual$importe == round(resultados$mensual$neto_gbp[match(r_mensual$mes, resultados$mensual$mes)] * 100)),
           all(r_paises$importe == round(resultados$paises$neto_gbp[match(r_paises$pais, resultados$paises$pais)] * 100)),
           all(r_articulos$cantidad == resultados$articulos$unidades_netas[match(r_articulos$codigo, resultados$articulos$codigo)]))
-registrar_prueba("SQL contra R", "Importes por mes y país, y cantidades por artículo coinciden")
+pruebas <- rbind(pruebas, registrar_prueba("SQL contra R", "Importes por mes y país, y cantidades por artículo coinciden"))
 
 stopifnot(nrow(ventas_original) == sum(!en_periodo) + nrow(muestra),
           nrow(muestra) == nrow(lineas),
@@ -68,7 +71,7 @@ stopifnot(nrow(ventas_original) == sum(!en_periodo) + nrow(muestra),
           bitacora$filas_despues[bitacora$regla == "seleccion_periodo"] == nrow(lineas),
           bitacora$afectados[bitacora$regla == "precio_cero_fuera_del_analisis"] == sum(lineas$analizable == 0),
           unname(tools::md5sum(archivo)) == md5_original)
-registrar_prueba("Conservación", "Entradas = fuera del período + selección; selección = analizadas + separadas; original intacto")
+pruebas <- rbind(pruebas, registrar_prueba("Conservación", "Entradas = fuera del período + selección; selección = analizadas + separadas; original intacto"))
 
 probar_rollback <- function(ruta) {
   conexion <- abrir_base(ruta)
@@ -91,7 +94,7 @@ probar_rollback <- function(ruta) {
   mensaje
 }
 error_esperado <- probar_rollback(ruta_base)
-registrar_prueba("Rollback", paste("Una inserción válida se revirtió tras el error esperado:", error_esperado))
+pruebas <- rbind(pruebas, registrar_prueba("Rollback", paste("Una inserción válida se revirtió tras el error esperado:", error_esperado)))
 
 # Reconstrucción independiente: mismo origen y misma preparación, otra SQLite.
 # Se comparan todos los resultados, no solamente el número de filas.
@@ -104,6 +107,6 @@ probar_reconstruccion <- function() {
   stopifnot(isTRUE(all.equal(resultados, repetido, tolerance = 0)))
 }
 probar_reconstruccion()
-registrar_prueba("Segunda reconstrucción", "Las ocho consultas dan exactamente los mismos resultados en una base nueva")
+pruebas <- rbind(pruebas, registrar_prueba("Segunda reconstrucción", "Las ocho consultas dan exactamente los mismos resultados en una base nueva"))
 guardar_csv(pruebas, "verificaciones.csv")
 cat("Todas las conexiones de consulta y prueba quedaron cerradas.\n")

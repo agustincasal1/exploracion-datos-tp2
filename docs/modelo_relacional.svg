@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="1140" height="460" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1140 460" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="1140" height="460"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-460)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="310" width="240" height="106" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 0,374 L 240,374 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="14" y="387" style="font-family: Negrita; font-size: 23px;fill: rgb(13%,29%,40%); stroke:none;" transform="translate(0,774) scale(1,-1)">paises</text>
+			<text x="14" y="348" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,696) scale(1,-1)">PK pais_id</text>
+			<text x="14" y="319" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,638) scale(1,-1)">UK pais</text>
+			<rect x="350" y="210" width="300" height="164" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 350,332 L 650,332 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="364" y="345" style="font-family: Negrita; font-size: 23px;fill: rgb(13%,29%,40%); stroke:none;" transform="translate(0,690) scale(1,-1)">facturas</text>
+			<text x="364" y="306" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,612) scale(1,-1)">PK factura</text>
+			<text x="364" y="277" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,554) scale(1,-1)">cliente_id (NULL permitido)</text>
+			<text x="364" y="248" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,496) scale(1,-1)">FK pais_id</text>
+			<text x="364" y="219" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,438) scale(1,-1)">cancelacion (0/1)</text>
+			<rect x="350" y="0" width="300" height="135" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 350,93 L 650,93 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="364" y="106" style="font-family: Negrita; font-size: 23px;fill: rgb(13%,29%,40%); stroke:none;" transform="translate(0,212) scale(1,-1)">articulos</text>
+			<text x="364" y="67" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,134) scale(1,-1)">PK codigo</text>
+			<text x="364" y="38" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,76) scale(1,-1)">descripcion (NULL permitido)</text>
+			<text x="364" y="9" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,18) scale(1,-1)">fila_descripcion (origen)</text>
+			<rect x="770" y="100" width="365" height="280" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 770,338 L 1135,338 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="784" y="351" style="font-family: Negrita; font-size: 23px;fill: rgb(13%,29%,40%); stroke:none;" transform="translate(0,702) scale(1,-1)">lineas</text>
+			<text x="784" y="312" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,624) scale(1,-1)">PK fila_excel</text>
+			<text x="784" y="283" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,566) scale(1,-1)">FK factura</text>
+			<text x="784" y="254" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,508) scale(1,-1)">FK codigo</text>
+			<text x="784" y="225" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,450) scale(1,-1)">fecha_hora</text>
+			<text x="784" y="196" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,392) scale(1,-1)">cantidad</text>
+			<text x="784" y="167" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,334) scale(1,-1)">precio_peniques</text>
+			<text x="784" y="138" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,276) scale(1,-1)">descripcion_original</text>
+			<text x="784" y="109" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,218) scale(1,-1)">analizable (0/1)</text>
+			<path d="M 240,360 L 350,360 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 2;"/>
+			<text x="260" y="372" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,744) scale(1,-1)">1 a N</text>
+			<path d="M 650,315 L 770,315 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 2;"/>
+			<text x="670" y="327" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,654) scale(1,-1)">1 a N</text>
+			<path d="M 650,110 L 710,110 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 2;"/>
+			<text x="670" y="122" style="font-family: Texto; font-size: 18px;fill: rgb(12%,16%,19%); stroke:none;" transform="translate(0,244) scale(1,-1)">1 a N</text>
+			<path d="M 710,110 L 710,240 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 710,240 L 770,240 Z" style="stroke: rgb(13%,29%,40%); stroke-linecap: butt; stroke-width: 2;"/>
+		</g>
+	</g>
+</svg>

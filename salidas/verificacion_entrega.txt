@@ -1,0 +1,18 @@
+Verificación de entrega TP2 - Agustín Casal
+Fecha local de registro: 2026-10-26T18:33:55.490598-03:00
+
+Ejecución de R/ejecutar.R: completa, sin errores.
+Notebook R: 47 celdas de código ejecutadas, cero errores y tres gráficos con salidas.
+Prueba autónoma: notebook en carpeta nueva, sin scripts, SQL ni Excel previos.
+Descarga: UCI no respondió en una prueba; la copia de GitHub se descargó desde R.
+MD5 verificado del Excel: 8f8e6d94ba88f976f4d8290cb2dea7fd.
+Comparación autónoma/local: resultados CSV y contenido de las cuatro tablas idénticos.
+SQLite: cuatro tablas, 99602 líneas, neto firmado 174132999 peniques.
+PRAGMA foreign_key_check: sin filas; PRAGMA integrity_check: ok.
+Pruebas del notebook: siete comprobaciones OK, incluidas rollback y segunda reconstrucción.
+Presentación: 13 páginas, tres gráficos en las últimas tres, revisión visual de todas las páginas.
+
+Entorno de verificación: R local en Windows, con kernel R para Jupyter.
+No se afirma una ejecución dentro de Google Colab.
+Las versiones usadas están en sessionInfo.txt y resultados/versiones_paquetes.csv.
+La propuesta de fuente queda para presentar a la cátedra según los hitos de EVA.

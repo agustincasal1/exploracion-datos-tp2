@@ -1,6 +1,6 @@
 "prueba","resultado","evidencia"
 "Caso conocido","OK","Excel filas 61621 y 61626: importes +77183,60 y -77183,60 GBP"
-"Casos límite separados","OK","Espacios, interrogación, NA, fecha imposible, precio con tres decimales y cero"
+"Casos límite separados","OK","Espacios, interrogación, NA, fecha imposible, precio negativo o con tres decimales, precio y cantidad cero"
 "Integridad y JOIN","OK","Claves únicas, foreign_key_check sin huérfanos, filas e importes sin multiplicación"
 "SQL contra R","OK","Importes por mes y país, y cantidades por artículo coinciden"
 "Conservación","OK","Entradas = fuera del período + selección; selección = analizadas + separadas; original intacto"

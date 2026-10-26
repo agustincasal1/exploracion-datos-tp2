@@ -30,12 +30,31 @@ guardar_csv <- function(tabla, nombre) {
 }
 
 url_fuente <- "https://archive.ics.uci.edu/static/public/352/online+retail.zip"
+url_copia <- paste0("https://raw.githubusercontent.com/agustincasal1/exploracion-datos-tp2/",
+                    "main/datos/original/Online%20Retail.xlsx")
 archivo <- file.path(originales, "Online Retail.xlsx")
+url_obtencion <- "Archivo local conservado"
 if (!file.exists(archivo)) {
   descarga <- tempfile(fileext = ".zip")
-  download.file(url_fuente, descarga, mode = "wb", quiet = TRUE)
-  unzip(descarga, files = "Online Retail.xlsx", exdir = originales)
+  options(timeout = 45)
+  desde_uci <- tryCatch({
+    download.file(url_fuente, descarga, mode = "wb", quiet = TRUE)
+    unzip(descarga, files = "Online Retail.xlsx", exdir = originales)
+    file.exists(archivo)
+  }, error = function(e) {
+    message("No se pudo descargar desde UCI: ", conditionMessage(e))
+    FALSE
+  })
   unlink(descarga)
+  if (desde_uci) {
+    url_obtencion <- url_fuente
+  } else {
+    message("Intento la copia sin editar incluida en el repositorio del TP2.")
+    options(timeout = 90)
+    download.file(url_copia, archivo, mode = "wb", quiet = TRUE)
+    url_obtencion <- url_copia
+  }
+  options(timeout = 300)
 }
 
 # La huella identifica exactamente la copia usada en la entrega.
@@ -45,7 +64,8 @@ procedencia_archivo <- file.path(raiz, "datos", "procedencia.csv")
 if (!file.exists(procedencia_archivo)) {
   procedencia <- data.frame(
     responsable = "Daqing Chen / UCI Machine Learning Repository",
-    url = url_fuente, doi = "10.24432/C5BW33", licencia = "CC BY 4.0",
+    url = url_fuente, url_obtencion = url_obtencion,
+    doi = "10.24432/C5BW33", licencia = "CC BY 4.0",
     archivo = "datos/original/Online Retail.xlsx", md5 = md5_original,
     registrado_utc = format(Sys.time(), tz = "UTC", usetz = TRUE),
     nota = "Registro de esta copia local; puede reutilizarse en ejecuciones posteriores"

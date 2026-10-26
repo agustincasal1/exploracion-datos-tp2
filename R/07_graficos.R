@@ -1,4 +1,4 @@
-theme_set(theme_minimal(base_size = 12))
+theme_set(theme_minimal(base_size = 16) + theme(plot.margin = margin(10, 35, 10, 10)))
 numero <- function(x, decimales = 0) {
   formatC(x, format = "f", digits = decimales, big.mark = ".", decimal.mark = ",")
 }
@@ -16,9 +16,9 @@ g1 <- ggplot(mensual_grafico, aes(mes, importe, fill = tipo)) +
   scale_fill_manual(values = c("Ventas" = "#397CA5", "Cancelaciones" = "#CB7651", "Neto" = "#31755B")) +
   scale_y_continuous(labels = numero, expand = expansion(mult = c(0, 0.06))) +
   labs(title = "Ventas y cancelaciones en los tres meses",
-    subtitle = "Enero a marzo de 2011. Las cancelaciones se muestran como importe positivo",
+    subtitle = "Enero a marzo de 2011\nLas cancelaciones se muestran como importe positivo",
     x = "Mes", y = "Importe registrado (GBP)", fill = NULL,
-    caption = "Neto = ventas menos cancelaciones. Líneas con precio positivo. Fuente: UCI Online Retail.") +
+    caption = "Neto = ventas menos cancelaciones. Líneas con precio positivo.\nFuente: UCI Online Retail.") +
   theme(legend.position = "bottom", plot.title = element_text(face = "bold"))
 print(g1)
 ggsave(file.path(resultados_dir, "grafico_1_meses.png"), g1, width = 10, height = 5.6, dpi = 160)
@@ -30,9 +30,9 @@ g2 <- ggplot(principales_paises, aes(reorder(pais, neto_gbp), neto_gbp)) +
   coord_flip() +
   scale_y_continuous(labels = numero, expand = expansion(mult = c(0, 0.15))) +
   labs(title = "El importe neto se concentra en pocos países",
-    subtitle = "Ocho países con mayor importe neto. Los porcentajes usan el total de todos los países",
+    subtitle = "Ocho países con mayor importe neto\nLos porcentajes usan el total de todos los países",
     x = NULL, y = "Importe neto registrado (GBP)",
-    caption = "País del cliente informado en la factura. Incluye clientes sin ID. Fuente: UCI Online Retail.") +
+    caption = "País del cliente informado en la factura. Incluye clientes sin ID.\nFuente: UCI Online Retail.") +
   theme(plot.title = element_text(face = "bold"))
 print(g2)
 ggsave(file.path(resultados_dir, "grafico_2_paises.png"), g2, width = 10, height = 5.6, dpi = 160)
@@ -45,10 +45,10 @@ g3 <- ggplot(principales_articulos, aes(reorder(etiqueta, unidades_netas), unida
   coord_flip() +
   scale_y_continuous(labels = numero, expand = expansion(mult = c(0, 0.15))) +
   labs(title = "Artículos con más unidades netas registradas",
-    subtitle = "Ocho primeros códigos. Unidades netas = positivas menos canceladas",
+    subtitle = "Ocho primeros códigos\nUnidades netas = positivas menos canceladas",
     x = NULL, y = "Unidades netas del artículo",
-    caption = "Sólo líneas con precio positivo. Las unidades no miden ganancia. Fuente: UCI Online Retail.") +
-  theme(plot.title = element_text(face = "bold"), axis.text.y = element_text(size = 9))
+    caption = "Sólo líneas con precio positivo. Las unidades no miden ganancia.\nFuente: UCI Online Retail.") +
+  theme(plot.title = element_text(face = "bold"), axis.text.y = element_text(size = 12))
 print(g3)
 ggsave(file.path(resultados_dir, "grafico_3_articulos.png"), g3, width = 12, height = 5.6, dpi = 160)
 
