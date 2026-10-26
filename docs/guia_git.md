@@ -14,6 +14,7 @@ consultas, verificaciones y documentación.
 | 26/10/2026, 18:33 | Notebook, presentación y documentación final. |
 
 Las fechas de acceso a la fuente y las verificaciones se conservan sin cambios.
+Los commits posteriores registran revisiones concretas con la fecha en que se hicieron.
 
 ```sh
 git clone https://github.com/agustincasal1/exploracion-datos-tp2.git

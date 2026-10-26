@@ -47,18 +47,13 @@ apunta a una fila de otra tabla. `UK` marca un valor único. Un país tiene much
 facturas, una factura tiene muchas líneas y un artículo aparece en muchas líneas.
 Cada línea pertenece a una sola factura y a un solo código.
 
-Los cuatro dataframes salen del Excel. El código define el período, los nombres
-de tablas, las reglas y las claves de países, pero no inventa países, facturas,
-artículos ni precios. `procedencia.csv` describe la copia del archivo y no cuenta
-como una quinta entidad del análisis.
+Los cuatro dataframes salen del Excel. El código define el período, las reglas
+y las claves de países. `procedencia.csv` registra el archivo utilizado.
 
-El cliente se conserva como atributo opcional de la factura. El proyecto no
-analiza clientes individuales ni necesita un catálogo que sólo repita ese ID.
-Un valor NULL significa cliente desconocido y no es una referencia huérfana.
+El cliente es un atributo opcional de la factura. NULL indica que falta su ID.
 
 El catálogo de artículos usa la primera descripción válida con precio positivo,
-o la primera válida si no hay otra. No afirma que sea un nombre oficial actual.
-La descripción recibida en cada renglón se conserva en `lineas`, y
+o la primera válida si no hay otra. La descripción recibida se conserva en `lineas`, y
 `fila_descripcion` permite revisar qué fila eligió el código.
 
 Algunas descripciones nombran packs. Las cantidades son unidades comerciales
