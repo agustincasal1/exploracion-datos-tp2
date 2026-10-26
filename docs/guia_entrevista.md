@@ -34,7 +34,7 @@ en cada línea. País y cliente son constantes dentro de cada factura selecciona
 
 Una transacción guarda juntas las operaciones o las revierte si falla alguna.
 La prueba agrega un país válido y después intenta una línea con factura
-inexistente. Espero que fallen y se reviertan las dos inserciones.
+inexistente. La segunda debe fallar y las dos deben revertirse.
 
 `stopifnot` detiene el proceso cuando una condición falla. `on.exit` cierra la
 conexión al salir de la función. La reconstrucción crea otra base y compara las
