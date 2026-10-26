@@ -1,9 +1,9 @@
+# Los gráficos usan las tablas consultadas en SQLite.
 theme_set(theme_minimal(base_size = 16) + theme(plot.margin = margin(10, 35, 10, 10)))
 numero <- function(x, decimales = 0) {
   formatC(x, format = "f", digits = decimales, big.mark = ".", decimal.mark = ",")
 }
 
-# Los tres gráficos parten de dataframes obtenidos con dbGetQuery, no del Excel.
 mensual <- resultados$mensual
 mensual_grafico <- rbind(
   data.frame(mes = mensual$mes, tipo = "Ventas", importe = mensual$ventas_gbp),

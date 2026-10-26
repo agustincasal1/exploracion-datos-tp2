@@ -1,5 +1,4 @@
-# Cada consulta tiene un nombre. Son cadenas de SQL ejecutadas con DBI.
-# Las divisiones por 100.0 convierten peniques a GBP recién al presentar.
+# Consultas de resultados y controles. Importes guardados en peniques.
 consultas <- list(
   mensual = "-- Una fila por mes. GBP, sólo líneas con precio positivo.
 -- ventas: cantidad positiva; cancelaciones: magnitud del importe negativo.
@@ -79,14 +78,20 @@ FROM (
 SELECT COUNT(*) AS filas, SUM(cantidad*precio_peniques) AS importe_peniques
 FROM lineas"
 )
-writeLines(unlist(lapply(names(consultas), function(nombre) {
-  paste0("-- CONSULTA: ", nombre, "\n", consultas[[nombre]], ";\n")
-})), file.path(raiz, "sql", "consultas.sql"), useBytes = TRUE)
+texto_sql <- character()
+for (nombre in names(consultas)) {
+  texto_sql <- c(texto_sql, paste0("-- CONSULTA: ", nombre, "\n", consultas[[nombre]], ";\n"))
+}
+writeLines(texto_sql, file.path(raiz, "sql", "consultas.sql"), useBytes = TRUE)
 
 consultar_base <- function(ruta) {
   conexion <- abrir_base(ruta)
   on.exit(dbDisconnect(conexion))
-  lapply(consultas, function(sql) dbGetQuery(conexion, sql))
+  tablas <- list()
+  for (nombre in names(consultas)) {
+    tablas[[nombre]] <- dbGetQuery(conexion, consultas[[nombre]])
+  }
+  tablas
 }
 resultados <- consultar_base(ruta_base)
 for (nombre in names(resultados)) {

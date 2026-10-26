@@ -1,4 +1,4 @@
-# Todo este diagnóstico se hace sobre la selección, antes de prepararla.
+# Diagnóstico de la selección antes de prepararla.
 campos <- names(muestra)[1:8]
 diagnostico <- data.frame(
   campo = campos,
@@ -20,9 +20,6 @@ guardar_csv(diagnostico, "diagnostico_inicial.csv")
 print(summary(muestra[c("Quantity", "UnitPrice", "InvoiceDate")]))
 print(sort(table(muestra$Country), decreasing = TRUE))
 
-# No hay identificador de renglón. Dos líneas idénticas pueden ser una repetición
-# o dos registros reales. Las informo y conservo; no alcanza con su parecido
-# para demostrar que se cargaron por error.
 repetidas <- duplicated(muestra[campos])
 cat("Renglones idénticos a otro anterior:", sum(repetidas), "\n")
 guardar_csv(muestra[repetidas, ], "repeticiones_para_revisar.csv")
@@ -32,7 +29,6 @@ control_facturas <- muestra %>% group_by(InvoiceNo) %>% summarise(
   paises_distintos = n_distinct(Country), .groups = "drop")
 print(control_facturas %>% filter(horas_distintas > 1))
 guardar_csv(control_facturas, "diagnostico_facturas.csv")
-# País y cliente deben ser consistentes para poder guardarlos en la cabecera.
 stopifnot(all(control_facturas$clientes_distintos == 1),
           all(control_facturas$paises_distintos == 1))
 

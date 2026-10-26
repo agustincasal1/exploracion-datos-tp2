@@ -1,34 +1,26 @@
+# Copia de trabajo y construcción de los cuatro dataframes.
 ventas <- muestra
 names(ventas) <- c("factura", "codigo", "descripcion_original", "cantidad", "fecha_original",
                    "precio_gbp", "cliente_original", "pais", "fila_excel")
 
-# Mantengo los renglones sin cliente: sirven para estudiar importes y artículos.
-# NA significa desconocido. No lo reemplazo por el cliente 0.
 ventas$cliente_id <- ifelse(is.na(ventas$cliente_original), NA_character_,
                            sprintf("%.0f", ventas$cliente_original))
 ventas$fecha_hora <- format(ventas$fecha_original, "%Y-%m-%d %H:%M:%S", tz = "UTC")
 ventas$cancelacion <- as.integer(grepl("^C", ventas$factura))
 
-# Trabajar en peniques evita acumular aproximaciones al sumar dinero en SQLite.
-# El diagnóstico debe confirmar antes que no se pierde precisión al convertir.
 stopifnot(all(is.finite(ventas$precio_gbp)), all(is.finite(ventas$cantidad)),
           all(abs(ventas$precio_gbp * 100 - round(ventas$precio_gbp * 100)) < 1e-6),
           all(ventas$cantidad == round(ventas$cantidad)), all(ventas$precio_gbp >= 0))
 ventas$precio_peniques <- as.integer(round(ventas$precio_gbp * 100))
 ventas$cantidad <- as.integer(ventas$cantidad)
 
-# Limpio sólo los textos usados para elegir una etiqueta. La descripción recibida
-# queda en cada línea. Un '?' tampoco alcanza para identificar un artículo.
 ventas$descripcion_etiqueta <- trimws(ventas$descripcion_original)
 ventas$descripcion_etiqueta[ventas$descripcion_etiqueta %in% c("", "?")] <- NA_character_
 
-# Precio cero no demuestra una venta gratuita: también hay ajustes sin valorar.
-# Los guardo en la base y los dejo fuera de los tres resultados de ventas.
 ventas$analizable <- as.integer(ventas$precio_peniques > 0 & ventas$cantidad != 0)
 stopifnot(all(ventas$cancelacion[ventas$analizable == 1] ==
                 as.integer(ventas$cantidad[ventas$analizable == 1] < 0)))
 
-# Cuatro dataframes construidos con valores observados, no catálogos inventados.
 paises <- data.frame(pais = sort(unique(ventas$pais)))
 paises$pais_id <- seq_len(nrow(paises))
 paises <- paises[c("pais_id", "pais")]
@@ -38,9 +30,6 @@ facturas <- ventas %>% distinct(factura, cliente_id, pais, cancelacion) %>%
   arrange(factura) %>% as.data.frame()
 stopifnot(!anyDuplicated(facturas$factura))
 
-# Un mismo código tiene a veces varias descripciones. Elijo la primera descripción
-# válida con precio positivo; si no existe, la primera válida de cualquier línea.
-# Es una etiqueta de referencia. No cambia las cantidades ni combina códigos.
 articulos <- ventas %>% arrange(desc(precio_peniques > 0), fila_excel) %>%
   filter(!is.na(descripcion_etiqueta)) %>% distinct(codigo, .keep_all = TRUE) %>%
   select(codigo, descripcion = descripcion_etiqueta, fila_descripcion = fila_excel)
@@ -51,8 +40,6 @@ lineas <- ventas %>% select(fila_excel, factura, codigo, fecha_hora, cantidad,
                             precio_peniques, descripcion_original, analizable) %>%
   arrange(fila_excel) %>% as.data.frame()
 
-# Cada conteo 'afectados' corresponde a renglones de la fuente, salvo donde la
-# unidad dice explícitamente artículos. Las transformaciones no borran filas.
 n <- nrow(muestra)
 bitacora <- data.frame(
   regla = c("seleccion_periodo", "cliente_a_texto", "cliente_ausente", "fecha_iso",

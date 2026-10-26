@@ -1,4 +1,4 @@
-# Se puede ejecutar desde la carpeta del proyecto o dentro del notebook.
+# Paquetes, archivo original y selección del trimestre.
 paquetes <- c("DBI", "RSQLite", "readxl", "dplyr", "ggplot2")
 faltan <- paquetes[!sapply(paquetes, requireNamespace, quietly = TRUE)]
 if (length(faltan) > 0) {
@@ -13,8 +13,6 @@ suppressPackageStartupMessages({
 })
 options(timeout = 300, width = 110, repr.plot.width = 10, repr.plot.height = 6)
 
-# En Colab, con el notebook solo, se usa /content. Con la entrega descomprimida,
-# se reconoce la carpeta sin escribir una ruta particular de mi computadora.
 raiz <- "."
 if (!dir.exists("R") && dir.exists("TP2_ED_CasalAgustin")) {
   raiz <- "TP2_ED_CasalAgustin"
@@ -57,7 +55,6 @@ if (!file.exists(archivo)) {
   options(timeout = 300)
 }
 
-# La huella identifica exactamente la copia usada en la entrega.
 md5_original <- unname(tools::md5sum(archivo))
 stopifnot(md5_original == "8f8e6d94ba88f976f4d8290cb2dea7fd")
 procedencia_archivo <- file.path(raiz, "datos", "procedencia.csv")
@@ -74,8 +71,6 @@ if (!file.exists(procedencia_archivo)) {
 }
 print(read.csv(procedencia_archivo))
 
-# read_excel reconoce la fecha de Excel como fecha y hora. Los códigos se leen
-# como texto, aunque algunos tengan solamente números.
 ventas_original <- as.data.frame(read_excel(
   archivo, sheet = 1, trim_ws = FALSE,
   col_types = c("text", "text", "text", "numeric", "date", "numeric", "numeric", "text")
@@ -89,7 +84,6 @@ cat("Archivo completo:", nrow(ventas_original), "renglones y", ncol(ventas_origi
 print(head(ventas_original, 3))
 str(ventas_original)
 
-# El número de fila permite volver al Excel. La fila 1 contiene los nombres.
 ventas_original$fila_excel <- seq_len(nrow(ventas_original)) + 1L
 inicio <- as.POSIXct("2011-01-01", tz = "UTC")
 fin <- as.POSIXct("2011-04-01", tz = "UTC")
@@ -98,8 +92,6 @@ en_periodo <- !is.na(ventas_original$InvoiceDate) &
 muestra <- ventas_original[en_periodo, ]
 cat("Selección:", nrow(muestra), "renglones de enero a marzo de 2011\n")
 
-# readxl usa UTC como representación técnica. El archivo no informa zona
-# horaria: no convierto estas horas a la hora argentina ni afirmo que sean UTC.
 diccionario <- data.frame(
   campo = c("InvoiceNo", "StockCode", "Description", "Quantity", "InvoiceDate",
             "UnitPrice", "CustomerID", "Country", "fila_excel", "precio_peniques",
