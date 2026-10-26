@@ -56,20 +56,15 @@ mejor_mes <- mensual$mes[which.max(mensual$neto_gbp)]
 peor_mes <- mensual$mes[which.min(mensual$neto_gbp)]
 participacion_uk <- resultados$paises$porcentaje_neto[resultados$paises$pais == "United Kingdom"]
 hallazgos <- c(
-  paste0("La selección tiene ", numero(nrow(lineas)), " renglones; ",
-         numero(sum(lineas$analizable == 1)), " tienen precio positivo y entran en los resultados."),
-  paste0("El mayor neto mensual corresponde a ", mejor_mes, " y el menor a ", peor_mes,
-         ". Comparo tres meses completos; esto no prueba una tendencia anual."),
-  paste0("United Kingdom concentra el ", numero(participacion_uk, 1),
-         "% del neto total del trimestre. Describe esta tienda británica, no el mercado de cada país."),
-  paste0("El código ", principales_articulos$codigo[1], " encabeza las unidades netas con ",
-         numero(principales_articulos$unidades_netas[1]), ". Cantidad vendida no equivale a rentabilidad."),
-  paste0("Si se conservara sólo la primera fila de cada repetición exacta, el neto cambiaría en ",
-         numero(-resultados$repeticiones$diferencia_gbp, 2),
-         " GBP. Mantengo las filas porque no puedo demostrar que sean errores."),
-  "Las cancelaciones pueden corresponder a operaciones de otros períodos. No calculo una tasa de devolución por compra.",
-  "Los importes son cantidad por precio registrado. Faltan costos, impuestos y detalle contable para hablar de ganancias.",
-  "Algunos códigos son cargos o ajustes. El ranking describe los códigos del archivo; no demuestra demanda futura."
+  paste0("Selección: ", numero(nrow(lineas)), " renglones; ",
+         numero(sum(lineas$analizable == 1)), " con precio positivo."),
+  paste0("Mayor neto mensual: ", mejor_mes, "; menor: ", peor_mes, "."),
+  paste0("Reino Unido: ", numero(participacion_uk, 1), "% del neto del trimestre."),
+  paste0("Primer artículo por unidades netas: ", principales_articulos$codigo[1],
+         ", con ", numero(principales_articulos$unidades_netas[1]), "."),
+  paste0("Quitar las copias posteriores de filas idénticas bajaría el neto en ",
+         numero(resultados$repeticiones$diferencia_gbp, 2), " GBP."),
+  "Los resultados describen los registros de esta tienda en enero a marzo de 2011."
 )
 cat(paste(hallazgos, collapse = "\n\n"), "\n")
 writeLines(hallazgos, file.path(raiz, "salidas", "hallazgos.txt"), useBytes = TRUE)
@@ -78,4 +73,4 @@ versiones <- data.frame(paquete = paquetes,
   version = sapply(paquetes, function(x) as.character(packageVersion(x))))
 guardar_csv(versiones, "versiones_paquetes.csv")
 stopifnot(unname(tools::md5sum(archivo)) == md5_original)
-cat("Proceso completo. El original sigue intacto y las conexiones quedaron cerradas.\n")
+cat("Salidas guardadas en:", resultados_dir, "\n")
